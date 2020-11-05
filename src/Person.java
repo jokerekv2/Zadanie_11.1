@@ -9,6 +9,7 @@ public class Person {
         throwAgeExceptionIf(age);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.age = age;
         this.pesel = pesel;
     }
 
@@ -49,8 +50,6 @@ public class Person {
     private void throwAgeExceptionIf(int age) throws IncorrectAgeException {
         if (age < 1)
             throw new IncorrectAgeException("Podany wiek jest mniejszy od jeden, a nie powinien.");
-        else
-            this.age = age;
     }
 
     private void throwNameExceptionIf(String firstName, String lastName) throws NameUndefinedException {
