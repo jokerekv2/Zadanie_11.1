@@ -5,25 +5,19 @@ public class Person {
     private String pesel;
 
     public Person(String firstName, String lastName, int age, String pesel) throws NameUndefinedException, IncorrectAgeException {
-        if (firstName == null || lastName == null) {
-            throw new NameUndefinedException("Imię lub nazwisko jest nullem!");
-        } else if (firstName.length() < 2 || lastName.length() < 2) {
-            throw new NameUndefinedException("Imię lub nazwisko mają mniej niż dwa znaki!");
-        } else if (age < 1) {
-            throw new IncorrectAgeException("Podany wiek jest mniejszy od jeden, a nie powinien.");
-        } else {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.age = age;
-            this.pesel = pesel;
-        }
+        throwNameExceptionIf(firstName, lastName);
+        throwAgeExceptionIf(age);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pesel = pesel;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName) throws NameUndefinedException {
+        throwNameExceptionIf(firstName);
         this.firstName = firstName;
     }
 
@@ -31,7 +25,8 @@ public class Person {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName) throws NameUndefinedException {
+        throwNameExceptionIf(lastName);
         this.lastName = lastName;
     }
 
@@ -40,10 +35,7 @@ public class Person {
     }
 
     public void setAge(int age) throws IncorrectAgeException {
-        if (age < 1) {
-            throw new IncorrectAgeException("Podany wiek jest mniejszy od 1, a nie powinien.");
-        } else
-            this.age = age;
+        throwAgeExceptionIf(age);
     }
 
     public String getPesel() {
@@ -52,5 +44,28 @@ public class Person {
 
     public void setPesel(String pesel) {
         this.pesel = pesel;
+    }
+
+    private void throwAgeExceptionIf(int age) throws IncorrectAgeException {
+        if (age < 1)
+            throw new IncorrectAgeException("Podany wiek jest mniejszy od jeden, a nie powinien.");
+        else
+            this.age = age;
+    }
+
+    private void throwNameExceptionIf(String firstName, String lastName) throws NameUndefinedException {
+        if (firstName == null || lastName == null) {
+            throw new NameUndefinedException("Imię lub nazwisko jest nullem!");
+        } else if (firstName.length() < 2 || lastName.length() < 2) {
+            throw new NameUndefinedException("Imię lub nazwisko mają mniej niż dwa znaki!");
+        }
+    }
+
+    private void throwNameExceptionIf(String name) throws NameUndefinedException {
+        if (name == null) {
+            throw new NameUndefinedException("Imię lub nazwisko jest nullem!");
+        } else if (name.length() < 2) {
+            throw new NameUndefinedException("Imię lub nazwisko mają mniej niż dwa znaki!");
+        }
     }
 }
