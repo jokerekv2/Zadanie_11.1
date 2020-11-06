@@ -5,8 +5,8 @@ public class Person {
     private String pesel;
 
     public Person(String firstName, String lastName, int age, String pesel) throws NameUndefinedException, IncorrectAgeException {
-        throwNameExceptionIf(firstName, lastName);
-        throwAgeExceptionIf(age);
+        validateName(firstName, lastName);
+        validateAge(age);
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -18,7 +18,7 @@ public class Person {
     }
 
     public void setFirstName(String firstName) throws NameUndefinedException {
-        throwNameExceptionIf(firstName);
+        validateName(firstName);
         this.firstName = firstName;
     }
 
@@ -27,7 +27,7 @@ public class Person {
     }
 
     public void setLastName(String lastName) throws NameUndefinedException {
-        throwNameExceptionIf(lastName);
+        validateName(lastName);
         this.lastName = lastName;
     }
 
@@ -36,7 +36,7 @@ public class Person {
     }
 
     public void setAge(int age) throws IncorrectAgeException {
-        throwAgeExceptionIf(age);
+        validateAge(age);
     }
 
     public String getPesel() {
@@ -47,12 +47,12 @@ public class Person {
         this.pesel = pesel;
     }
 
-    private void throwAgeExceptionIf(int age) throws IncorrectAgeException {
+    private void validateAge(int age) throws IncorrectAgeException {
         if (age < 1)
             throw new IncorrectAgeException("Podany wiek jest mniejszy od jeden, a nie powinien.");
     }
 
-    private void throwNameExceptionIf(String firstName, String lastName) throws NameUndefinedException {
+    private void validateName(String firstName, String lastName) throws NameUndefinedException {
         if (firstName == null || lastName == null) {
             throw new NameUndefinedException("Imię lub nazwisko jest nullem!");
         } else if (firstName.length() < 2 || lastName.length() < 2) {
@@ -60,7 +60,7 @@ public class Person {
         }
     }
 
-    private void throwNameExceptionIf(String name) throws NameUndefinedException {
+    private void validateName(String name) throws NameUndefinedException {
         if (name == null) {
             throw new NameUndefinedException("Imię lub nazwisko jest nullem!");
         } else if (name.length() < 2) {
